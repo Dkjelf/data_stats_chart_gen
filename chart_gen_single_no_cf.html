@@ -1,0 +1,172 @@
+<html>
+  <head>
+     <!--Load the AJAX API-->
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+     <script type="text/javascript">
+	
+	 //Code by Dan Jelf
+	 //06/14/2016
+	
+	// Variables
+	 var list = [];
+	 var titles = [];
+	 var listNum = 1;
+	 var data;
+	 var options;
+	 var barChart;
+	 
+     // Load the Visualization API
+     google.charts.load('current', {'packages':['corechart','bar', 'controls']});
+
+     // Set a callback to run when the Google Visualization API is loaded.
+     google.charts.setOnLoadCallback(draw);
+
+	 //calls the extract data method which waits until all the data is extracted before calculating the averages
+	 function draw()
+	 {
+		extractData().done(drawChart);
+	 }
+	 
+	 //This function creates the columns, the filter, and the actual chart object. It then calls change which functions as a referesh
+     function drawChart() 
+	 {
+		var avg = calcAvgs()
+	 
+		//The chart object
+		barChart = new google.visualization.BarChart(document.getElementById("bar"));
+		
+		var options = {
+			title : list[listNum][0],
+			width :  1000, 
+			height : 250, 
+			hAxis : { title: "Percent", minValue: 0, maxValue:100, format: '#\'%\''},
+			animation: {duration: 1000, easing: 'out',},
+			chartArea: {  width: "65%", height: "80%" },
+			colors: ['#1F77B4', '#C9C9C9']
+			}
+			
+		// Create our data table.
+        data= new google.visualization.DataTable();
+		data.addColumn('string', 'Statistics');
+		data.addColumn('number', 'Percent');
+		data.addColumn({type:'string', role: 'tooltip'});
+		data.addColumn('number', 'Average');
+		data.addColumn({type:'string', role: 'tooltip'});
+		
+		//Adds the name of the data, the actual data, the average, and a description
+		data.addRows([
+		["Date Coverage", list[listNum][1], 'The percentage of dates covered in the time period studied in this data set',
+		avg[0], 'The average percentage of dates covered in the time periods studied'],
+		["Geographic Coverage", list[listNum][2], "The amount of geographical area within the studied location accounted for in this data set", 
+		avg[1], "The average amount of geographical area within the studied locations accounted for"],
+		["Geographic Precision", list[listNum][3], "The precision of the locations reported on the data studied in this data set", 
+		avg[2], "The average precision of the locations reported on studied data"],
+		["Sector Detail", list[listNum][4], "The amount of detail in the data gathered within each particular sector", 
+		avg[3], "The average amount of detail in the data gathered within each particular sector"]]);
+
+		var view = new google.visualization.DataView(data);
+		view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+						 2, 3,
+                       { calc: "stringify",
+                         sourceColumn: 3,
+                         type: "string",
+                         role: "annotation" },
+						 4,]);	
+
+						 
+		barChart.draw(view, options);
+     }
+
+	 //Function to handle the user clicking on a bar
+     function selectHandler() {
+        var selectedItem = chart.getSelection()[0];
+        var value = data.getValue(selectedItem.row, 0);
+        //alert('The user selected ' + value);
+     }
+	 
+	 // Extracts the data from the JSON file and puts it in the 'list' object
+	 function extractData()
+	 {
+		var r = $.Deferred();
+		list.push(['Name', 'Date Coverage', 'Geographic Coverage', 'Geographic Precision', 'Compare Financials', 'Sector Detail']);
+		
+		// Here is all the JSON stuff
+		loadJSON(function(response) {
+			// Parse JSON string into object
+			var actual_JSON = JSON.parse(response);
+			
+			//Loops over every element in the third level of the JSON file
+			for(var i = 0; i < length(actual_JSON.GeocodedResearchReleases.Level1); i++){
+				//Creates a massive array in the format below
+				list.push([actual_JSON.GeocodedResearchReleases.Level1[i].dataset_title.replace(/([a-z])([A-Z])/g, '$1 $2')
+							.replace(/^./, function(str){ return str.toUpperCase(); }), //title
+				actual_JSON.GeocodedResearchReleases.Level1[i].scores.date_coverage, //date_coverage
+				actual_JSON.GeocodedResearchReleases.Level1[i].scores.geographic_coverage, //geographic_coverage
+				actual_JSON.GeocodedResearchReleases.Level1[i].scores.geographic_precision, //geographic_precision
+				actual_JSON.GeocodedResearchReleases.Level1[i].scores.sector_detail]); //graphic_precision
+			}
+		})
+		
+		//This waits for the for loop to complete
+		setTimeout(function() { 
+		r.resolve();
+		}, 1500);
+		
+		return r;
+	} 
+	  
+	 //loads the JSON file
+	 function loadJSON(callback) 
+	 {   
+		var xobj = new XMLHttpRequest();
+		xobj.overrideMimeType("application/json");
+		xobj.open('GET', 'build_stats.json', true);
+		xobj.onreadystatechange = function () 
+		{
+			if (xobj.readyState == 4 && xobj.status == "200") 
+			{
+				// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+				callback(xobj.responseText);
+			}
+		};
+		xobj.send(null);  
+     }
+	
+	 // Returns number of objects in the passed object
+	 function length(obj) 
+	 {
+		return Object.keys(obj).length;
+	 }
+
+	// Calculates Averages of the dataset
+	function calcAvgs()
+	{
+		var avg = [0,0,0,0,0];
+	 
+		for(var k = 1; k < list.length; k++){
+			avg[0] += list[k][1];
+			avg[1] += list[k][2];
+			avg[2] += list[k][3];
+			avg[3] += list[k][4];
+			avg[4] += list[k][5];
+		}
+		avg[0] /= list.length;
+		avg[1] /= list.length;
+		avg[2] /= list.length;
+		avg[3] /= list.length;
+		avg[4] /= list.length;
+		
+		return avg;
+	 }
+	 
+    </script>
+  </head>
+  <body>
+		<div id="bar" style="width: 1000px; height:250px"></div>
+  </body>
+</html>
