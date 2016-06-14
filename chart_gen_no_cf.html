@@ -101,7 +101,7 @@
 				actual_JSON.GeocodedResearchReleases.Level1[i].scores.sector_detail]); //graphic_precision
 				
 				//List of titles
-				titles.push(list[i][0]);
+				titles.push(list[i+1][0]);
 			}
 		})
 		
@@ -234,7 +234,7 @@
 		titleList = document.getElementById("dropdown1");
 		
 		for (var j = 0; j < titles.length; j++) {
-			titleList.options[titleList.options.length] = new Option(titles[j], j);
+			titleList.options[titleList.options.length] = new Option(titles[j], j+1);
 		}
 	 
 	 }
