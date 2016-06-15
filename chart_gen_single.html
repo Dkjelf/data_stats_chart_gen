@@ -2,7 +2,6 @@
   <head>
      <!--Load the AJAX API-->
      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
      <script type="text/javascript">
 	
 	 //Code by Dan Jelf
@@ -25,7 +24,7 @@
 	 //calls the extract data method which waits until all the data is extracted before calculating the averages
 	 function draw()
 	 {
-		extractData().done(drawChart);
+		extractData();
 	 }
 	 
 	 //This function creates the columns, the filter, and the actual chart object. It then calls change which functions as a referesh
@@ -94,7 +93,7 @@
 	 // Extracts the data from the JSON file and puts it in the 'list' object
 	 function extractData()
 	 {
-		var r = $.Deferred();
+		//var r = $.Deferred();
 		list.push(['Name', 'Date Coverage', 'Geographic Coverage', 'Geographic Precision', 'Compare Financials', 'Sector Detail']);
 		
 		// Here is all the JSON stuff
@@ -115,12 +114,14 @@
 			}
 		})
 		
-		//This waits for the for loop to complete
-		setTimeout(function() { 
-		r.resolve();
-		}, 1500);
+		drawChart();
 		
-		return r;
+		//This waits for the for loop to complete
+		//setTimeout(function() { 
+		//r.resolve();
+		//}, 1500);
+		
+		//return r;
 	} 
 	  
 	 //loads the JSON file
