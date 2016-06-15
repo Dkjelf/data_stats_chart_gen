@@ -38,7 +38,7 @@
 		
 		var options = {
 			title : list[listNum][0],
-			width :  1000, 
+			width :  980, 
 			height : 250, 
 			hAxis : { title: "Percent", minValue: 0, maxValue:100, format: '#\'%\''},
 			animation: {duration: 1000, easing: 'out',},
@@ -65,6 +65,7 @@
 		["Sector Detail", list[listNum][4], "The amount of detail in the data gathered within each particular sector", 
 		avg[3], "The average amount of detail in the data gathered within each particular sector"]]);
 
+		
 		var view = new google.visualization.DataView(data);
 		view.setColumns([0, 1,
                        { calc: "stringify",
@@ -167,6 +168,6 @@
     </script>
   </head>
   <body>
-		<div id="bar" style="width: 1000px; height:250px"></div>
+		<div id="bar" style="width: 980px; height:250px"></div>
   </body>
 </html>
