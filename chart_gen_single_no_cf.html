@@ -94,12 +94,12 @@
 	 function extractData()
 	 {
 		var r = $.Deferred();
-		list.push(['Name', 'Date Coverage', 'Geographic Coverage', 'Geographic Precision', , 'Sector Detail']);
+		list.push(['Name', 'Date Coverage', 'Geographic Coverage', 'Geographic Precision', 'Sector Detail']);
 		
 		// Here is all the JSON stuff
 		loadJSON(function(response) {
 			// Parse JSON string into object
-			var actual_JSON = JSON.parse(response);
+			var actual_JSON = JSON.parse(response.replace(/\bNaN\b/g, "null"));
 			
 			//Loops over every element in the third level of the JSON file
 			for(var i = 0; i < length(actual_JSON.GeocodedResearchReleases.Level1); i++){
@@ -126,7 +126,7 @@
 	 {   
 		var xobj = new XMLHttpRequest();
 		xobj.overrideMimeType("application/json");
-		xobj.open('GET', 'http://rawgit.com/Dkjelf/build-stats/master/build_stats.json', true);
+		xobj.open('GET', 'http://rawgit.com/AidData-WM/build-stats/master/build_stats.json', true);
 		xobj.onreadystatechange = function () 
 		{
 			if (xobj.readyState == 4 && xobj.status == "200") 
