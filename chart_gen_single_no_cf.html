@@ -38,6 +38,7 @@
 		
 		var options = {
 			title : list[listNum][0],
+			fontName : 'OpenSans',
 			width :  980, 
 			height : 250, 
 			hAxis : { title: "Percent", minValue: 0, maxValue:100, format: '#\'%\''},
@@ -93,7 +94,7 @@
 	 function extractData()
 	 {
 		var r = $.Deferred();
-		list.push(['Name', 'Date Coverage', 'Geographic Coverage', 'Geographic Precision', 'Compare Financials', 'Sector Detail']);
+		list.push(['Name', 'Date Coverage', 'Geographic Coverage', 'Geographic Precision', , 'Sector Detail']);
 		
 		// Here is all the JSON stuff
 		loadJSON(function(response) {
@@ -125,7 +126,7 @@
 	 {   
 		var xobj = new XMLHttpRequest();
 		xobj.overrideMimeType("application/json");
-		xobj.open('GET', 'http://rawgit.com/AidData-WM/build-stats/master/build_stats.json', true);
+		xobj.open('GET', 'http://rawgit.com/Dkjelf/build-stats/master/build_stats.json', true);
 		xobj.onreadystatechange = function () 
 		{
 			if (xobj.readyState == 4 && xobj.status == "200") 
