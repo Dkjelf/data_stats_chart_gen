@@ -10,7 +10,7 @@
      <script type="text/javascript">
 	
 	 //Code by Dan Jelf
-	 //06/16/2016
+	 //06/17/2016
 	
 	// Variables
 	 var list = []
@@ -173,17 +173,23 @@
 	 }
 
 	 function getData(){
-	 	document.getElementById("p1").innerHTML = ("<b>Geocoded Data Coverage </b> <br/> Years: " + text[0] + " - " + text[1] +"<br/>Donors: " + text[2] + "<br/>Total Projects: " + text[3] + "<br/>Geocoded Projects: " + text[4] +"<br/>Locations: " + text[5] + "<br/>Total Disbursements $" + text[6] +"<br/>Total Commitments: $" + text[7] + "<br/>Geocoded Disbursements: $" + text[8] + "<br/>Geocoded Commitments: $" + text[9]);
+	 	document.getElementById("p1").innerHTML = ("<b>Geocoded Data Coverage </b> <br/> Years: " + text[0] + " - " + text[1] +"<br/>Donors: " + numberWithCommas(text[2]) + "<br/>Total Projects: " + numberWithCommas(text[3]) + "<br/>Geocoded Projects: " + numberWithCommas(text[4]) +"<br/>Locations: " + numberWithCommas(text[5]) + "<br/>Total Disbursements $" + numberWithCommas(text[6]) +"<br/>Total Commitments: $" + numberWithCommas(text[7]) + "<br/>Geocoded Disbursements: $" + numberWithCommas(text[8]) + "<br/>Geocoded Commitments: $" + numberWithCommas(text[9]));
      }
+
+    function numberWithCommas(x) {
+    	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
 	 
     </script>
+
+
   </head>
   <body>
    <div id="page-wrapper" class="clearfix">
 
-  		<p><div id="p1" > </div>
+  		<div id="p1" > </div>
 		<div id="bar" style="width: 980px; height:200px"></div>
-		</p>
+		
 	</div> 
   </body>
 </html>
