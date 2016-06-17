@@ -1,5 +1,8 @@
 <html>
   <head>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open%20Sans%3A300italic%2C400italic%2C600italic%2C700italic%2C800italic%2C400%2C300%2C600%2C700%2C800&amp;o7np4z" media="all" />
+	<link rel="stylesheet" href="http://aiddata.org/sites/default/files/css/css_O50BLMtxP3WUPIdIhncKV5Wq2nU5FXIXxeBq9_kvssU.css" media="all" />
+
      <!--Load the AJAX API-->
      <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	 <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
@@ -110,6 +113,8 @@
 				actual_JSON.GeocodedResearchReleases.Level1[i].scores.geographic_precision, //geographic_precision
 				actual_JSON.GeocodedResearchReleases.Level1[i].scores.sector_detail]); //graphic_precision
 			}
+
+			text.push(actual_JSON.GeocodedResearchReleases.Level1[listNum].start_year, actual_JSON.GeocodedResearchReleases.Level1[listNum].end_year, actual_JSON.GeocodedResearchReleases.Level1[listNum].donors, actual_JSON.GeocodedResearchReleases.Level1[listNum].total_projects, actual_JSON.GeocodedResearchReleases.Level1[listNum].geocoded_projects, actual_JSON.GeocodedResearchReleases.Level1[listNum].locations, actual_JSON.GeocodedResearchReleases.Level1[listNum].total_disbursements, actual_JSON.GeocodedResearchReleases.Level1[listNum].total_commitments, actual_JSON.GeocodedResearchReleases.Level1[listNum].geocoded_disbursements, actual_JSON.GeocodedResearchReleases.Level1[listNum].geocoded_commitments);
 		})
 		
 		//This waits for the for loop to complete
@@ -164,9 +169,22 @@
 		return avg;
 	 }
 	 
+	 //Retrieves data from text array and displays it above the graph
+	 function getData(){
+	 	document.getElementById("p1").innerHTML = ("<b>Geocoded Data Coverage </b> <br/> Years: " + text[0] + " - " + text[1] +"<br/>Donors: " + numberWithCommas(text[2]) + "<br/>Total Projects: " + numberWithCommas(text[3]) + "<br/>Geocoded Projects: " + numberWithCommas(text[4]) +"<br/>Locations: " + numberWithCommas(text[5]) + "<br/>Total Disbursements $" + numberWithCommas(text[6]) +"<br/>Total Commitments: $" + numberWithCommas(text[7]) + "<br/>Geocoded Disbursements: $" + numberWithCommas(text[8]) + "<br/>Geocoded Commitments: $" + numberWithCommas(text[9]));
+     }
+
+     //returns the number value with commas where appropriate
+    function numberWithCommas(x) {
+    	return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	}
+
     </script>
   </head>
   <body>
+		<div id="page-wrapper" class="clearfix">
+
+  		<div id="p1" > </div>
 		<div id="bar" style="width: 980px; height:200px"></div>
   </body>
 </html>
