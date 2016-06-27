@@ -164,11 +164,11 @@
 			avg[3] += list[k][4];
 			avg[4] += list[k][5];
 		}
-		avg[0] /= list.length;
-		avg[1] /= list.length;
-		avg[2] /= list.length;
-		avg[3] /= list.length;
-		avg[4] /= list.length;
+		avg[0] /= list.length-1;
+		avg[1] /= list.length-1;
+		avg[2] /= list.length-1;
+		avg[3] /= list.length-1;
+		avg[4] /= list.length-1;
 		
 		return avg;
 	 }
