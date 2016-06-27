@@ -62,14 +62,14 @@
 		
 		//Adds the name of the data, the actual data, the average, and a description
 		data.addRows([
-		["Date Coverage", list[listNum][1], 'The percentage of dates covered in the time period studied in this data set',
-		avg[0], 'The average percentage of dates covered in the time periods studied'],
-		["Geographic Coverage", list[listNum][2], "The amount of geographical area within the studied location accounted for in this data set", 
-		avg[1], "The average amount of geographical area within the studied locations accounted for"],
-		["Geographic Precision", list[listNum][3], "The precision of the locations reported on the data studied in this data set", 
-		avg[2], "The average precision of the locations reported on studied data"],
-		["Sector Detail", list[listNum][4], "The amount of detail in the data gathered within each particular sector", 
-		avg[3], "The average amount of detail in the data gathered within each particular sector"]]);
+		["Date Coverage", list[listNum][1], 'Indicates the percentage of projects that have specific sector designations (all but 430, 43010, 998, 99810).',
+		avg[0], 'The average value across all current AidData datasets'],
+		["Geographic Coverage", list[listNum][2], "Indicates the percentage of all locations that have a precision code value of either 1, 2, or 3 (locations that are exact, within 25 km, or ADM2 centroid locations).", 
+		avg[1], "The average value across all current AidData datasets"],
+		["Geographic Precision", list[listNum][3], "Indicates the percentage of all projects that are geocoded.", 
+		avg[2], "The average value across all current AidData datasets"],
+		["Sector Detail", list[listNum][4], "Indicates the percentage of projects that have full date information, including starting and ending dates.", 
+		avg[3], "The average value across all current AidData datasets"]]);
 
 		var view = new google.visualization.DataView(data);
 		view.setColumns([0, 1,
