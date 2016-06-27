@@ -162,17 +162,17 @@
 			avg[3] += list[k][4];
 			avg[4] += list[k][5];
 		}
-		avg[0] /= list.length;
-		avg[1] /= list.length;
-		avg[2] /= list.length;
-		avg[3] /= list.length;
-		avg[4] /= list.length;
+		avg[0] /= list.length-1;
+		avg[1] /= list.length-1;
+		avg[2] /= list.length-1;
+		avg[3] /= list.length-1;
+		avg[4] /= list.length-1;
 		
 		return avg;
 	 }
 
 	 function getData(){
-	 	document.getElementById("p1").innerHTML = ("<b>Geocoded Data Coverage </b> <br/> Years: " + text[0] + " - " + text[1] +"<br/>Donors: " + numberWithCommas(text[2]) + "<br/>Total Projects: " + numberWithCommas(text[3]) + "<br/>Geocoded Projects: " + numberWithCommas(text[4]) +"<br/>Locations: " + numberWithCommas(text[5]) + "<br/>Total Disbursements: " + numberWithCommas(text[6]) +"<br/>Total Commitments: " + numberWithCommas(text[7]) + "<br/>Geocoded Disbursements: " + numberWithCommas(text[8]) + "<br/>Geocoded Commitments: " + numberWithCommas(text[9]));
+	 	document.getElementById("p1").innerHTML = ("<b>Geocoded Data Coverage </b> <br/> Years: " + text[0] + " - " + text[1] +"<br/>Donors: " + numberWithCommas(text[2]) + "<br/>Total Projects: " + numberWithCommas(text[3]) + "<br/>Geocoded Projects: " + numberWithCommas(text[4]) +"<br/>Locations: " + numberWithCommas(text[5]) + "<br/>Total Disbursements: $" + numberWithCommas(text[6]) +"<br/>Total Commitments: $" + numberWithCommas(text[7]) + "<br/>Geocoded Disbursements: $" + numberWithCommas(text[8]) + "<br/>Geocoded Commitments: $" + numberWithCommas(text[9]));
      }
 
     function numberWithCommas(x) {
