@@ -9,16 +9,19 @@
      <script type="text/javascript">
 	
 	 //Code by Dan Jelf
-	 //06/17/2016
+	 //07/21/2016
 	
-	// Variables
+	 // PUT THE DATASET NAME AS APPEARS IN THE JSON
+	 var datasetName = "AfghanistanAIMS";
+
+	 // Variables
 	 var list = [];
 	 var titles = [];
 	 //this controls which graph is displayed
-	 var listNum = 13;
 	 var data;
 	 var options;
 	 var barChart;
+	 var listNum = 0;
 	 var text = [];
 	 
      // Load the Visualization API
@@ -29,9 +32,7 @@
 
 	 //calls the extract data method which waits until all the data is extracted before calculating the averages
 	 function draw()
-	 {
-		extractData().done(drawChart);
-	 }
+	 { extractData().done(drawChart);}
 	 
 	 //This function creates the columns, the filter, and the actual chart object. It then calls change which functions as a referesh
      function drawChart() 
@@ -45,7 +46,7 @@
 			width :  980, 
 			height : 200, 
 			bar  : {groupWidth : '90%'},
-			hAxis : { title: list[listNum][0], minValue: 0, maxValue:100},
+			hAxis : {minValue: 0, maxValue:100},
 			animation: {duration: 1000, easing: 'out',},
 			chartArea: {  width: "65%", height: "80%" },
 			colors: ['#1F77B4', '#C9C9C9']
@@ -99,7 +100,7 @@
 	 function extractData()
 	 {
 		var r = $.Deferred();
-		list.push(['Name', 'Date Coverage', 'Geographic Coverage', 'Geographic Precision', 'Compare Financials', 'Sector Detail']);
+		list.push(['Date Coverage', 'Geographic Coverage', 'Geographic Precision', 'Compare Financials', 'Sector Detail']);
 		
 		// Here is all the JSON stuff
 		loadJSON(function(response) {
@@ -109,12 +110,17 @@
 			//Loops over every element in the third level of the JSON file
 			for(var i = 0; i < length(actual_JSON.GeocodedResearchReleases.Level1); i++){
 				//Creates a massive array in the format below
-				list.push([actual_JSON.GeocodedResearchReleases.Level1[i].dataset_title.replace(/([a-z])([A-Z])/g, '$1 $2')
-							.replace(/^./, function(str){ return str.toUpperCase(); }), //title
-				actual_JSON.GeocodedResearchReleases.Level1[i].scores.date_coverage, //date_coverage
+				// Extracts the title
+				//list.push([actual_JSON.GeocodedResearchReleases.Level1[i].dataset_title.replace(/([a-z])([A-Z])/g, '$1 $2')
+				//			.replace(/^./, function(str){ return str.toUpperCase(); }), //title
+				list.push([actual_JSON.GeocodedResearchReleases.Level1[i].scores.date_coverage, //date_coverage
 				actual_JSON.GeocodedResearchReleases.Level1[i].scores.geographic_coverage, //geographic_coverage
 				actual_JSON.GeocodedResearchReleases.Level1[i].scores.geographic_precision, //geographic_precision
 				actual_JSON.GeocodedResearchReleases.Level1[i].scores.sector_detail]); //graphic_precision
+
+				if(actual_JSON.GeocodedResearchReleases.Level1[i].dataset_title == datasetName){
+					listNum = i;
+				}
 			}
 			text.push(actual_JSON.GeocodedResearchReleases.Level1[listNum].start_year, actual_JSON.GeocodedResearchReleases.Level1[listNum].end_year, actual_JSON.GeocodedResearchReleases.Level1[listNum].donors, actual_JSON.GeocodedResearchReleases.Level1[listNum].total_projects, actual_JSON.GeocodedResearchReleases.Level1[listNum].geocoded_projects, actual_JSON.GeocodedResearchReleases.Level1[listNum].locations, actual_JSON.GeocodedResearchReleases.Level1[listNum].total_disbursements, actual_JSON.GeocodedResearchReleases.Level1[listNum].total_commitments, actual_JSON.GeocodedResearchReleases.Level1[listNum].geocoded_disbursements, actual_JSON.GeocodedResearchReleases.Level1[listNum].geocoded_commitments);
 		})
@@ -156,11 +162,11 @@
 		var avg = [0,0,0,0,0];
 	 
 		for(var k = 1; k < list.length; k++){
-			avg[0] += list[k][1];
-			avg[1] += list[k][2];
-			avg[2] += list[k][3];
-			avg[3] += list[k][4];
-			avg[4] += list[k][5];
+			avg[0] += list[k][0];
+			avg[1] += list[k][1];
+			avg[2] += list[k][2];
+			avg[3] += list[k][3];
+			avg[4] += list[k][4];
 		}
 		avg[0] /= list.length-1;
 		avg[1] /= list.length-1;
@@ -183,14 +189,11 @@
 	 
     </script>
 
-
   </head>
   <body>
    <div id="page-wrapper" class="clearfix">
-
   		<div id="p1" > </div>
 		<div id="bar" style="width: 980px; height:200px"></div>
-		
 	</div> 
   </body>
 </html>
