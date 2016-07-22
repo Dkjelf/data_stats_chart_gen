@@ -62,13 +62,13 @@
 		
 		//Adds the name of the data, the actual data, the average, and a description
 		data.addRows([
-		["Date Coverage", list[listNum][1], 'Indicates the percentage of projects that have specific sector designations (all but 430, 43010, 998, 99810).',
+		["Date Coverage", list[listNum][0], 'Indicates the percentage of projects that have specific sector designations (all but 430, 43010, 998, 99810).',
 		avg[0], 'The average value across all current AidData datasets'],
-		["Geographic Coverage", list[listNum][2], "Indicates the percentage of all locations that have a precision code value of either 1, 2, or 3 (locations that are exact, within 25 km, or ADM2 centroid locations).", 
+		["Geographic Coverage", list[listNum][1], "Indicates the percentage of all locations that have a precision code value of either 1, 2, or 3 (locations that are exact, within 25 km, or ADM2 centroid locations).", 
 		avg[1], "The average value across all current AidData datasets"],
-		["Geographic Precision", list[listNum][3], "Indicates the percentage of all projects that are geocoded.", 
+		["Geographic Precision", list[listNum][2], "Indicates the percentage of all projects that are geocoded.", 
 		avg[2], "The average value across all current AidData datasets"],
-		["Sector Detail", list[listNum][4], "Indicates the percentage of projects that have full date information, including starting and ending dates.", 
+		["Sector Detail", list[listNum][3], "Indicates the percentage of projects that have full date information, including starting and ending dates.", 
 		avg[3], "The average value across all current AidData datasets"]]);
 
 		var view = new google.visualization.DataView(data);
