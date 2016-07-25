@@ -44,18 +44,18 @@
 		
 		var options = {
 			width :  980, 
-			height : 200, 
+			height : 250, 
 			bar  : {groupWidth : '90%'},
-			hAxis : {minValue: 0, maxValue:100},
+			hAxis : {title: "Quality Metrics", minValue: 0, maxValue:100},
 			animation: {duration: 1000, easing: 'out',},
-			chartArea: {  width: "65%", height: "80%" },
+			chartArea: {  width: "65%", height: "70%" },
 			colors: ['#1F77B4', '#C9C9C9']
 			}
 			
 		// Create our data table.
         data= new google.visualization.DataTable();
 		data.addColumn('string', 'Statistics');
-		data.addColumn('number', 'Percent');
+		data.addColumn('number', 'Percent of this dataset');
 		data.addColumn({type:'string', role: 'tooltip'});
 		data.addColumn('number', 'Average Across All Datasets');
 		data.addColumn({type:'string', role: 'tooltip'});
@@ -179,6 +179,8 @@
 
 	 function getData(){
 	 	document.getElementById("p1").innerHTML = ("<b>Geocoded Data Coverage </b> <br/> Years: " + text[0] + " - " + text[1] +"<br/>Donors: " + numberWithCommas(text[2]) + "<br/>Total Projects: " + numberWithCommas(text[3]) + "<br/>Geocoded Projects: " + numberWithCommas(text[4]) +"<br/>Locations: " + numberWithCommas(text[5]) + "<br/>Total Disbursements: $" + numberWithCommas(text[6]) +"<br/>Total Commitments: $" + numberWithCommas(text[7]) + "<br/>Geocoded Disbursements: $" + numberWithCommas(text[8]) + "<br/>Geocoded Commitments: $" + numberWithCommas(text[9]));
+
+	 	document.getElementById("description").innerHTML = ( "<b>Date Coverage</b> indicates the percentage of projects that have full date information, including starting and ending dates. <br/><b>Geographic Coverage</b> indicates the percentage of all projects that are geocoded. <br/><b>Geographic Precision</b> indicates the percentage of all locations that have a precision code value of either 1, 2, or 3 (locations that are exact, within 25 km, or ADM2 centroid locations). <br/><b>Sector Detail</b> indicates the percentage of projects that have specific sector designations (all but 430, 43010, 998, 99810).");
      }
 
     function numberWithCommas(x) {
@@ -192,8 +194,9 @@
   </head>
   <body>
    <div id="page-wrapper" class="clearfix">
-  		<div id="p1" > </div>
-		<div id="bar" style="width: 980px; height:200px"></div>
+		<div id="p1"></div>
+		<div id="bar" style="width: 980px; height:250px"></div>
+		<div id="description"></div>
 	</div> 
   </body>
 </html>
